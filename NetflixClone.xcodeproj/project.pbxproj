@@ -62,7 +62,12 @@
 		45CBF3E12A22E29D00ABE97E /* NetflixClone */ = {
 			isa = PBXGroup;
 			children = (
+				45CBF4012A22F12A00ABE97E /* Models */,
+				45CBF4002A22F12600ABE97E /* Views */,
+				45CBF3FF2A22F12100ABE97E /* ViewModels */,
 				45CBF3F62A22E75600ABE97E /* Controllers */,
+				45CBF4022A23D6B300ABE97E /* Resources */,
+				45CBF4032A23D6BB00ABE97E /* Managers */,
 				45CBF3E22A22E29D00ABE97E /* AppDelegate.swift */,
 				45CBF3E42A22E29D00ABE97E /* SceneDelegate.swift */,
 				45CBF3E62A22E29D00ABE97E /* MainTabBarViewController.swift */,
@@ -82,6 +87,41 @@
 				45CBF3FD2A22E87400ABE97E /* DownloadsViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		45CBF3FF2A22F12100ABE97E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		45CBF4002A22F12600ABE97E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		45CBF4012A22F12A00ABE97E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		45CBF4022A23D6B300ABE97E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		45CBF4032A23D6BB00ABE97E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
