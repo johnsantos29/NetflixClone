@@ -16,9 +16,15 @@ final class HeroHeaderUIView: UIView {
         return imageView
     }()
 
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(heroImageView)
+
+        // add a fading gradient layer
+        // on the view
+        addGradient()
     }
 
     override func layoutSubviews() {
@@ -29,5 +35,17 @@ final class HeroHeaderUIView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
+    }
+}
+
+extension HeroHeaderUIView {
+    private func addGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor.clear.cgColor,
+            UIColor.systemBackground.cgColor
+        ]
+        gradientLayer.frame = bounds
+        layer.addSublayer(gradientLayer)
     }
 }
