@@ -16,6 +16,28 @@ final class HeroHeaderUIView: UIView {
         return imageView
     }()
 
+    private let playButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Play", for: .normal)
+        // TODO: change color
+        button.layer.borderColor = UIColor.secondarySystemFill.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 5
+        return button
+    }()
+
+    private let downloadButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Download", for: .normal)
+        // TODO: change color
+        button.layer.borderColor = UIColor.secondarySystemFill.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 5
+        return button
+    }()
+
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -25,6 +47,11 @@ final class HeroHeaderUIView: UIView {
         // add a fading gradient layer
         // on the view
         addGradient()
+
+        addSubview(playButton)
+        addSubview(downloadButton)
+
+        applyConstraints()
     }
 
     override func layoutSubviews() {
@@ -43,9 +70,21 @@ extension HeroHeaderUIView {
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [
             UIColor.clear.cgColor,
-            UIColor.systemBackground.cgColor
+            UIColor.systemBackground.cgColor,
         ]
         gradientLayer.frame = bounds
         layer.addSublayer(gradientLayer)
+    }
+
+    private func applyConstraints() {
+        NSLayoutConstraint.activate([
+            playButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 70),
+            playButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
+            playButton.widthAnchor.constraint(equalToConstant: 120),
+
+            downloadButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -70),
+            downloadButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
+            downloadButton.widthAnchor.constraint(equalToConstant: 120),
+        ])
     }
 }
