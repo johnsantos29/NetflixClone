@@ -14,6 +14,8 @@ class HomeViewController: UIViewController {
         return table
     }()
     
+    let sectionTitles: [String] = ["Trending Movies", "Popular", "Trending tv", "Upcoming Movies", "Top Rated"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,7 +62,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 20
+        return sectionTitles.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionTitles[section]
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
