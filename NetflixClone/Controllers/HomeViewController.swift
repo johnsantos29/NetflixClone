@@ -37,9 +37,20 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController {
     private func configureNavBar() {
+        // left nav item
         var image = UIImage(named: "netflixLogo")
         image = image?.withRenderingMode(.alwaysOriginal)
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
+        
+        // right nav items
+        let personImage = UIImage(systemName: "person")
+        let playImage = UIImage(systemName: "play.rectangle")
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: personImage, style: .done, target: self, action: nil),
+            UIBarButtonItem(image: playImage, style: .done, target: self, action: nil),
+        ]
+        
+        navigationController?.navigationBar.tintColor = .label
     }
 }
 
