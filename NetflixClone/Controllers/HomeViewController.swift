@@ -29,6 +29,8 @@ class HomeViewController: UIViewController {
         
         let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         homeFeedTable.tableHeaderView = headerView
+        
+        getTrendingMovies()
     }
     
     override func viewDidLayoutSubviews() {
@@ -36,6 +38,8 @@ class HomeViewController: UIViewController {
         homeFeedTable.frame = view.bounds
     }
 }
+
+// MARK: - Configure Navbar
 
 extension HomeViewController {
     private func configureNavBar() {
@@ -55,6 +59,17 @@ extension HomeViewController {
         navigationController?.navigationBar.tintColor = .label
     }
 }
+
+// MARK: - API Manager methods
+
+extension HomeViewController {
+    private func getTrendingMovies() {
+        APIManager.shared.getTrendingMovies { _ in
+        }
+    }
+}
+
+// MARK: - Table View Delegate and DataSource
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
