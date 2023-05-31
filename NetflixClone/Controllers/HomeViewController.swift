@@ -64,7 +64,13 @@ extension HomeViewController {
 
 extension HomeViewController {
     private func getTrendingMovies() {
-        APIManager.shared.getTrendingMovies { _ in
+        APIManager.shared.getTrendingMovies { results in
+            switch results {
+            case .success(let movies):
+                print(movies)
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 }

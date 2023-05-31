@@ -12,10 +12,14 @@ struct Constants {
     static let API_KEY = "4b44fbc99966d38eddfd056750a02462"
 }
 
+enum APIError: Error {
+    case failedToGetTrendingMovies
+}
+
 final class APIManager {
     static let shared = APIManager()
 
-    func getTrendingMovies(completion: @escaping (String) -> Void) {
+    func getTrendingMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
         let trendingURL = "\(Constants.BASE_URL)/3/trending/all/day?api_key=\(Constants.API_KEY)"
 
         guard let url = URL(string: trendingURL) else { return }
@@ -26,10 +30,10 @@ final class APIManager {
             }
 
             do {
-                let results = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                print(results)
+                let results = try JSONDecoder().decode(TrendingMoviesResponse.self, from: data)
+                completion(.success(results.results))
             } catch {
-                print(error.localizedDescription)
+                completion(.failure(error))
             }
         }
 
