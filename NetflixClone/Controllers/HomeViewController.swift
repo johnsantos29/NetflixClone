@@ -30,7 +30,14 @@ class HomeViewController: UIViewController {
         let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         homeFeedTable.tableHeaderView = headerView
         
-        getTrendingMovies()
+        let trendingURL = "\(Constants.BASE_URL)/3/trending/movie/day?api_key=\(Constants.API_KEY)"
+        let upcomingURL = "\(Constants.BASE_URL)/3/movie/upcoming?api_key=\(Constants.API_KEY)&language=en-US&page=1"
+        let popularURL = "\(Constants.BASE_URL)/3/movie/popular?api_key=\(Constants.API_KEY)&language=en-US&page=1"
+        let topRatedURL = "\(Constants.BASE_URL)/3/movie/top_rated?api_key=\(Constants.API_KEY)&language=en-US&page=1"
+        
+        fetchMovieData(movieUrl: topRatedURL)
+        
+//        fetchTvData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -63,11 +70,22 @@ extension HomeViewController {
 // MARK: - API Manager methods
 
 extension HomeViewController {
-    private func getTrendingMovies() {
-        APIManager.shared.getTrendingMovies { results in
+    private func fetchMovieData(movieUrl url: String) {
+        APIManager.shared.getMovies(movieUrl: url) { results in
             switch results {
             case .success(let movies):
                 print(movies)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func fetchTvData() {
+        APIManager.shared.getTrendingTvs { results in
+            switch results {
+            case .success(let tvs):
+                print(tvs)
             case .failure(let error):
                 print(error)
             }
