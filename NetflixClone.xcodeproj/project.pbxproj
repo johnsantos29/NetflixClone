@@ -21,6 +21,7 @@
 		45CBF4092A27CCDF00ABE97E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBF4082A27CCDF00ABE97E /* APIManager.swift */; };
 		45CBF40B2A27D2BB00ABE97E /* TMDBData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBF40A2A27D2BB00ABE97E /* TMDBData.swift */; };
 		45CBF40D2A2ABFD300ABE97E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBF40C2A2ABFD300ABE97E /* Extensions.swift */; };
+		45CBF4112A2AEB9200ABE97E /* TMDBDataCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBF4102A2AEB9200ABE97E /* TMDBDataCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		45CBF4082A27CCDF00ABE97E /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		45CBF40A2A27D2BB00ABE97E /* TMDBData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBData.swift; sourceTree = "<group>"; };
 		45CBF40C2A2ABFD300ABE97E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		45CBF4102A2AEB9200ABE97E /* TMDBDataCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBDataCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 			children = (
 				45CBF4042A23D73300ABE97E /* CollectionViewTableViewCell.swift */,
 				45CBF4062A25241300ABE97E /* HeroHeaderUIView.swift */,
+				45CBF4102A2AEB9200ABE97E /* TMDBDataCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				45CBF3E32A22E29D00ABE97E /* AppDelegate.swift in Sources */,
 				45CBF40D2A2ABFD300ABE97E /* Extensions.swift in Sources */,
 				45CBF3E52A22E29D00ABE97E /* SceneDelegate.swift in Sources */,
+				45CBF4112A2AEB9200ABE97E /* TMDBDataCollectionViewCell.swift in Sources */,
 				45CBF3FA2A22E7F300ABE97E /* UpcomingViewController.swift in Sources */,
 				45CBF40B2A27D2BB00ABE97E /* TMDBData.swift in Sources */,
 				45CBF3F82A22E76F00ABE97E /* HomeViewController.swift in Sources */,
