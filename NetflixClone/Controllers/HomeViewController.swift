@@ -14,7 +14,7 @@ class HomeViewController: UIViewController {
         return table
     }()
     
-    let sectionTitles: [String] = ["Trending Movies", "Popular", "Trending tv", "Upcoming Movies", "Top Rated"]
+    let sectionTitles: [String] = ["Trending Movies", "Trending tv", "Popular", "Upcoming Movies", "Top Rated"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,6 +99,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             width: 100,
             height: header.bounds.height)
         header.textLabel?.textColor = .label
+        header.textLabel?.text = header.textLabel?.text?.capitalizeFirstLetter()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
