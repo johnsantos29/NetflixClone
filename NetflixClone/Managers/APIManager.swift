@@ -13,7 +13,7 @@ struct Constants {
 }
 
 enum APIError: Error {
-    case failedToGetTrendingMovies
+    case failedToGetTMDBData
 }
 
 final class APIManager {
@@ -31,7 +31,7 @@ final class APIManager {
                 let results = try JSONDecoder().decode(TMDBApiResponse.self, from: data)
                 completion(.success(results.results))
             } catch {
-                completion(.failure(error))
+                completion(.failure(APIError.failedToGetTMDBData))
             }
         }
 
