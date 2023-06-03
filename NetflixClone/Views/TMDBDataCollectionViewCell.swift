@@ -5,6 +5,7 @@
 //  Created by John Erick Santos on 3/6/2023.
 //
 
+import SDWebImage
 import UIKit
 
 final class TMDBDataCollectionViewCell: UICollectionViewCell {
@@ -30,5 +31,14 @@ final class TMDBDataCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         posterImageView.frame = contentView.bounds
+    }
+}
+
+// MARK: - SDWebImage
+
+extension TMDBDataCollectionViewCell {
+    public func configure(with model: String) {
+        guard let url = URL(string: model) else { return }
+        posterImageView.sd_setImage(with: url, completed: nil)
     }
 }
