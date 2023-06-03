@@ -7,6 +7,14 @@
 
 import UIKit
 
+enum Section: Int {
+    case TrendingMovie = 0
+    case TrendingTv = 1
+    case Popular = 2
+    case Upcoming = 3
+    case TopRated = 4
+}
+
 class HomeViewController: UIViewController {
     private let homeFeedTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -29,14 +37,6 @@ class HomeViewController: UIViewController {
         
         let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         homeFeedTable.tableHeaderView = headerView
-        
-        let trendingMovieURL = "\(Constants.BASE_URL)/3/trending/movie/day?api_key=\(Constants.API_KEY)"
-        let upcomingURL = "\(Constants.BASE_URL)/3/movie/upcoming?api_key=\(Constants.API_KEY)&language=en-US&page=1"
-        let popularURL = "\(Constants.BASE_URL)/3/movie/popular?api_key=\(Constants.API_KEY)&language=en-US&page=1"
-        let topRatedURL = "\(Constants.BASE_URL)/3/movie/top_rated?api_key=\(Constants.API_KEY)&language=en-US&page=1"
-        let trendingTvURL = "\(Constants.BASE_URL)/3/trending/tv/day?api_key=\(Constants.API_KEY)"
-        
-        fetchTMDBData(urlString: trendingTvURL)
     }
     
     override func viewDidLayoutSubviews() {
@@ -69,16 +69,16 @@ extension HomeViewController {
 // MARK: - API Manager methods
 
 extension HomeViewController {
-    private func fetchTMDBData(urlString url: String) {
-        APIManager.shared.fetchTMDBData(urlString: url) { results in
-            switch results {
-            case .success(let data):
-                print(data)
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
+//    private func fetchTMDBData(urlString url: String) {
+//        APIManager.shared.fetchTMDBData(urlString: url) { results in
+//            switch results {
+//            case .success(let data):
+//                print(data)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
 }
 
 // MARK: - Table View Delegate and DataSource
@@ -114,6 +114,37 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             for: indexPath) as? CollectionViewTableViewCell
         else {
             return UITableViewCell()
+        }
+        
+        let trendingMovieURL = "\(Constants.BASE_URL)/3/trending/movie/day?api_key=\(Constants.API_KEY)"
+        let trendingTvURL = "\(Constants.BASE_URL)/3/trending/tv/day?api_key=\(Constants.API_KEY)"
+        let popularURL = "\(Constants.BASE_URL)/3/movie/popular?api_key=\(Constants.API_KEY)&language=en-US&page=1"
+        let upcomingURL = "\(Constants.BASE_URL)/3/movie/upcoming?api_key=\(Constants.API_KEY)&language=en-US&page=1"
+        let topRatedURL = "\(Constants.BASE_URL)/3/movie/top_rated?api_key=\(Constants.API_KEY)&language=en-US&page=1"
+        var urlString: String
+        
+        switch indexPath.section {
+        case Section.TrendingMovie.rawValue:
+            urlString = trendingMovieURL
+        case Section.TrendingTv.rawValue:
+            urlString = trendingTvURL
+        case Section.Popular.rawValue:
+            urlString = popularURL
+        case Section.Upcoming.rawValue:
+            urlString = upcomingURL
+        case Section.TopRated.rawValue:
+            urlString = topRatedURL
+        default:
+            return UITableViewCell()
+        }
+        
+        APIManager.shared.fetchTMDBData(urlString: urlString) { results in
+            switch results {
+            case .success(let data):
+                cell.configure(with: data)
+            case .failure(let error):
+                print(error)
+            }
         }
         
         return cell

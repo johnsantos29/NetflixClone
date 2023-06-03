@@ -37,8 +37,10 @@ final class TMDBDataCollectionViewCell: UICollectionViewCell {
 // MARK: - SDWebImage
 
 extension TMDBDataCollectionViewCell {
-    public func configure(with model: String) {
-        guard let url = URL(string: model) else { return }
+    public func configureCollectionViewCell(with imagePath: String) {
+        let fullImagePath = "https://image.tmdb.org/t/p/w500\(imagePath)"
+
+        guard let url = URL(string: fullImagePath) else { return }
         posterImageView.sd_setImage(with: url, completed: nil)
     }
 }
