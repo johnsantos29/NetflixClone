@@ -48,7 +48,7 @@ class CollectionViewTableViewCell: UITableViewCell {
 // MARK: - Configure
 
 extension CollectionViewTableViewCell {
-    public func configure(with titles: [TMDBData]) {
+    public func configureTableViewCell(with titles: [TMDBData]) {
         self.titles = titles
         
         DispatchQueue.main.async { [weak self] in

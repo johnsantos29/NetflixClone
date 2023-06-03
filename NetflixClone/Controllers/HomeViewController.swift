@@ -66,21 +66,6 @@ extension HomeViewController {
     }
 }
 
-// MARK: - API Manager methods
-
-extension HomeViewController {
-//    private func fetchTMDBData(urlString url: String) {
-//        APIManager.shared.fetchTMDBData(urlString: url) { results in
-//            switch results {
-//            case .success(let data):
-//                print(data)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
-}
-
 // MARK: - Table View Delegate and DataSource
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
@@ -141,7 +126,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         APIManager.shared.fetchTMDBData(urlString: urlString) { results in
             switch results {
             case .success(let data):
-                cell.configure(with: data)
+                cell.configureTableViewCell(with: data)
             case .failure(let error):
                 print(error)
             }
