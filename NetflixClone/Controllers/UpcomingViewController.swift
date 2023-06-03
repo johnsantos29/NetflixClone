@@ -8,6 +8,8 @@
 import UIKit
 
 class UpcomingViewController: UIViewController {
+    private var titles: [TMDBData] = .init()
+
     private let upcomingTable: UITableView = {
         let table = UITableView()
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -26,6 +28,8 @@ class UpcomingViewController: UIViewController {
         view.addSubview(upcomingTable)
         upcomingTable.delegate = self
         upcomingTable.dataSource = self
+
+        fetchUpcoming()
     }
 
     override func viewDidLayoutSubviews() {
@@ -35,14 +39,33 @@ class UpcomingViewController: UIViewController {
     }
 }
 
+extension UpcomingViewController {
+    // TODO: - DRY - Cache response
+    // and re-use here
+    private func fetchUpcoming() {
+        let upcomingURL = "\(Constants.BASE_URL)/3/movie/upcoming?api_key=\(Constants.API_KEY)&language=en-US&page=1"
+        APIManager.shared.fetchTMDBData(urlString: upcomingURL) { [weak self] result in
+            switch result {
+            case .success(let titles):
+                self?.titles = titles
+                DispatchQueue.main.async {
+                    self?.upcomingTable.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
 extension UpcomingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return titles.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "test"
+        cell.textLabel?.text = titles[indexPath.row].original_title ?? titles[indexPath.row].original_name ?? "Unknown"
         return cell
     }
 }
