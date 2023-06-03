@@ -18,44 +18,23 @@ enum APIError: Error {
 
 final class APIManager {
     static let shared = APIManager()
-    
-    func getMovies(movieUrl url: String, completion: @escaping (Result<[Movie], Error>) -> Void) {
+
+    func fetchTMDBData(urlString url: String, completion: @escaping (Result<[TMDBData], Error>) -> Void) {
         guard let url = URL(string: url) else { return }
-        
+
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
             guard let data = data, error == nil else {
                 return
             }
-            
+
             do {
-                let results = try JSONDecoder().decode(TrendingMoviesResponse.self, from: data)
+                let results = try JSONDecoder().decode(TMDBApiResponse.self, from: data)
                 completion(.success(results.results))
             } catch {
                 completion(.failure(error))
             }
         }
-        
-        task.resume()
-    }
-    
-    func getTrendingTvs(completion: @escaping (Result<[Tv], Error>) -> Void) {
-        let trendingURL = "\(Constants.BASE_URL)/3/trending/tv/day?api_key=\(Constants.API_KEY)"
-        
-        guard let url = URL(string: trendingURL) else { return }
-        
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            
-            do {
-                let results = try JSONDecoder().decode(TrendingTvsResponse.self, from: data)
-                completion(.success(results.results))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-        
+
         task.resume()
     }
 }
