@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		450E0C7A2A2BDDD600059507 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E0C792A2BDDD600059507 /* SearchResultsViewController.swift */; };
+		450E0C7E2A2C2C0400059507 /* YoutubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E0C7D2A2C2C0400059507 /* YoutubeVideo.swift */; };
 		45CBF3E32A22E29D00ABE97E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBF3E22A22E29D00ABE97E /* AppDelegate.swift */; };
 		45CBF3E52A22E29D00ABE97E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBF3E42A22E29D00ABE97E /* SceneDelegate.swift */; };
 		45CBF3E72A22E29D00ABE97E /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBF3E62A22E29D00ABE97E /* MainTabBarViewController.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		450E0C792A2BDDD600059507 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		450E0C7D2A2C2C0400059507 /* YoutubeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeVideo.swift; sourceTree = "<group>"; };
 		45CBF3DF2A22E29D00ABE97E /* NetflixClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetflixClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45CBF3E22A22E29D00ABE97E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45CBF3E42A22E29D00ABE97E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				45CBF40A2A27D2BB00ABE97E /* TMDBData.swift */,
+				450E0C7D2A2C2C0400059507 /* YoutubeVideo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				450E0C7A2A2BDDD600059507 /* SearchResultsViewController.swift in Sources */,
 				45CBF3E52A22E29D00ABE97E /* SceneDelegate.swift in Sources */,
 				45CBF4112A2AEB9200ABE97E /* TMDBDataCollectionViewCell.swift in Sources */,
+				450E0C7E2A2C2C0400059507 /* YoutubeVideo.swift in Sources */,
 				45CBF3FA2A22E7F300ABE97E /* UpcomingViewController.swift in Sources */,
 				45CBF40B2A27D2BB00ABE97E /* TMDBData.swift in Sources */,
 				45CBF3F82A22E76F00ABE97E /* HomeViewController.swift in Sources */,
