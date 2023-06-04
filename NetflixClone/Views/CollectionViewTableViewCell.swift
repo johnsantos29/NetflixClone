@@ -7,8 +7,14 @@
 
 import UIKit
 
+protocol CollectionViewTableViewCellDelegate: AnyObject {
+    func collectionViewTableViewCellDidTapCell(_ cell: CollectionViewTableViewCell, viewModel: TitlePreviewViewModel)
+}
+
 class CollectionViewTableViewCell: UITableViewCell {
     static let identifier = "CollectionViewTableViewCell"
+    
+    weak var delegate: CollectionViewTableViewCellDelegate?
     
     private var titles: [TMDBData] = .init()
     
@@ -83,14 +89,23 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
         collectionView.deselectItem(at: indexPath, animated: true)
         
         let title = titles[indexPath.row]
-        guard let titleName = title.original_name ?? title.original_title else {
+        guard let titleName = title.original_name ?? title.original_title,
+              let overview = title.overview
+        else {
             return
         }
         
-        APIManager.shared.fetchYoutubeData(query: titleName + " trailer") { result in
+        APIManager.shared.fetchYoutubeData(query: titleName + " trailer") { [weak self] result in
+            guard let strongSelf = self else { return }
+            
             switch result {
-            case .success(let title):
-                print(title)
+            case .success(let youtubeVideo):
+                strongSelf.delegate?.collectionViewTableViewCellDidTapCell(
+                    strongSelf,
+                    viewModel: TitlePreviewViewModel(
+                        title: titleName,
+                        youtubeVideo: youtubeVideo,
+                        titleOverview: overview))
             case .failure(let failure):
                 print(failure.localizedDescription)
             }
