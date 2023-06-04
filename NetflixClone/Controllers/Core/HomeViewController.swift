@@ -16,6 +16,8 @@ enum Section: Int {
 }
 
 class HomeViewController: UIViewController {
+    private var headerView: HeroHeaderUIView?
+    
     private let homeFeedTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(CollectionViewTableViewCell.self, forCellReuseIdentifier: CollectionViewTableViewCell.identifier)
@@ -35,7 +37,7 @@ class HomeViewController: UIViewController {
         
         configureNavBar()
         
-        let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         homeFeedTable.tableHeaderView = headerView
     }
     
@@ -45,7 +47,7 @@ class HomeViewController: UIViewController {
     }
 }
 
-// MARK: - Configure Navbar
+// MARK: - Configure
 
 extension HomeViewController {
     private func configureNavBar() {
@@ -125,10 +127,21 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.delegate = self
         
-        APIManager.shared.fetchTMDBData(urlString: urlString) { results in
+        APIManager.shared.fetchTMDBData(urlString: urlString) { [weak self] results in
             switch results {
-            case .success(let data):
-                cell.configureTableViewCell(with: data)
+            case .success(let titles):
+                cell.configureTableViewCell(with: titles)
+                
+                let randomTitle = titles.randomElement()
+                guard let titleName = randomTitle?.original_title ?? randomTitle?.original_name,
+                      let posterUrl = randomTitle?.poster_path
+                else {
+                    return
+                }
+                
+                let titleViewModel = TitleViewModel(titleName: titleName, posterURL: posterUrl)
+                self?.headerView?.configureHeroHeaderView(with: titleViewModel)
+                
             case .failure(let error):
                 print(error)
             }

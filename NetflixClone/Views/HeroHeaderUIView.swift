@@ -66,6 +66,14 @@ final class HeroHeaderUIView: UIView {
 }
 
 extension HeroHeaderUIView {
+    public func configureHeroHeaderView(with viewModel: TitleViewModel) {
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(viewModel.posterURL)") else {
+            return
+        }
+
+        heroImageView.sd_setImage(with: url)
+    }
+
     private func addGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [
