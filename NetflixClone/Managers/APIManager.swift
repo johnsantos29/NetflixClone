@@ -41,7 +41,7 @@ final class APIManager {
         task.resume()
     }
     
-    func fetchYoutubeData(query: String, completion: @escaping (Result<[String], Error>) -> Void) {
+    func fetchYoutubeData(query: String, completion: @escaping (Result<YoutubeVideo, Error>) -> Void) {
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
               let url = URL(string: "\(Constants.YT_BASE_URL)q=\(query)&key=\(Constants.YT_API_KEY)")
         else {
@@ -54,9 +54,8 @@ final class APIManager {
             }
             
             do {
-                let results = try JSONDecoder().decode(String.self, from: data)
-//                completion(.success(results.results))
-                print(results)
+                let results = try JSONDecoder().decode(YoutubeApiResponse.self, from: data)
+                completion(.success(results.items[0]))
             } catch {
                 completion(.failure(APIError.failedToGetYTData))
             }
