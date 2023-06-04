@@ -39,6 +39,8 @@ class SearchViewController: UIViewController {
         navigationItem.searchController = searchController
         navigationController?.navigationBar.tintColor = .label
         
+        searchController.searchResultsUpdater = self
+        
         fetchDiscoverMovies()
     }
     
@@ -65,6 +67,49 @@ extension SearchViewController {
         }
     }
 }
+
+// MARK: - UISearchResultsUpdating
+
+extension SearchViewController: UISearchResultsUpdating {
+    // get the query text from the search bar
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        
+        guard let query = searchBar.text,
+              !query.trimmingCharacters(in: .whitespaces).isEmpty,
+              query.trimmingCharacters(in: .whitespaces).count >= 3,
+              let resultsController = searchController.searchResultsController as? SearchResultsViewController
+        else {
+            return
+        }
+        
+        fetchSearchQuery(searchResultsViewController: resultsController, query: query)
+    }
+}
+
+// MARK: - Fetch
+
+extension SearchViewController {
+    private func fetchSearchQuery(searchResultsViewController vc: SearchResultsViewController, query: String) {
+        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        
+        let urlString = "\(Constants.BASE_URL)/3/search/movie?api_key=\(Constants.API_KEY)&query=\(query)"
+        
+        APIManager.shared.fetchTMDBData(urlString: urlString) { results in
+            switch results {
+            case .success(let titles):
+                vc.titles = titles
+                DispatchQueue.main.async {
+                    vc.searchResultsCollectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: - Table View delegate and dataSource methods
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
