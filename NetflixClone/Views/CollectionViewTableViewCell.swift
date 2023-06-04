@@ -78,4 +78,22 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return titles.count
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let title = titles[indexPath.row]
+        guard let titleName = title.original_name ?? title.original_title else {
+            return
+        }
+        
+        APIManager.shared.fetchYoutubeData(query: titleName + " trailer") { result in
+            switch result {
+            case .success(let title):
+                print(title)
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
+    }
 }
