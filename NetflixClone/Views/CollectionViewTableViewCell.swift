@@ -63,6 +63,19 @@ extension CollectionViewTableViewCell {
     }
 }
 
+// MARK: - Download
+
+extension CollectionViewTableViewCell {
+    private func downloadItem(indexPath: IndexPath) {
+        let title = titles[indexPath.row]
+        let titleName = title.original_name ?? title.original_title ?? "Unknown"
+        
+        print("Downloading \(titleName)")
+    }
+}
+
+// MARK: - Delegate methods
+
 extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
@@ -110,5 +123,23 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
                 print(failure.localizedDescription)
             }
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let config = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil)
+        { _ in
+            let downloadAction = UIAction(
+                title: "Download",
+                state: .off)
+            { [weak self] _ in
+                self?.downloadItem(indexPath: indexPath)
+            }
+            
+            return UIMenu(title: "", options: .displayInline, children: [downloadAction])
+        }
+        
+        return config
     }
 }

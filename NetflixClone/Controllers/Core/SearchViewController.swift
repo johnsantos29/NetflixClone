@@ -70,7 +70,7 @@ extension SearchViewController {
 
 // MARK: - UISearchResultsUpdating
 
-extension SearchViewController: UISearchResultsUpdating {
+extension SearchViewController: UISearchResultsUpdating, SearchResultsViewControllerDelegate {
     // get the query text from the search bar
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
@@ -83,7 +83,17 @@ extension SearchViewController: UISearchResultsUpdating {
             return
         }
         
+        resultsController.delegate = self
+        
         fetchSearchQuery(searchResultsViewController: resultsController, query: query)
+    }
+    
+    func searchResultsViewControllerDidTapItem(_ viewModel: TitlePreviewViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            let vc = TitlePreviewViewController()
+            vc.configure(with: viewModel)
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 

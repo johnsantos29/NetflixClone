@@ -7,8 +7,14 @@
 
 import UIKit
 
+protocol SearchResultsViewControllerDelegate: AnyObject {
+    func searchResultsViewControllerDidTapItem(_ viewModel: TitlePreviewViewModel)
+}
+
 class SearchResultsViewController: UIViewController {
     public var titles: [TMDBData] = .init()
+    
+    weak var delegate: SearchResultsViewControllerDelegate?
     
     public let searchResultsCollectionView: UICollectionView = {
         let layoutWidth = (UIScreen.main.bounds.width / 3) - 10
@@ -53,5 +59,24 @@ extension SearchResultsViewController: UICollectionViewDelegate, UICollectionVie
         cell.configureCollectionViewCell(with: titles[indexPath.row].poster_path ?? "")
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let title = titles[indexPath.row]
+        
+        guard let titleName = title.original_name ?? title.original_title,
+              let overview = title.overview else { return }
+        
+        APIManager.shared.fetchYoutubeData(query: titleName) { [weak self] results in
+            switch results {
+            case .success(let youtubeVideo):
+                let viewModel = TitlePreviewViewModel(title: titleName, youtubeVideo: youtubeVideo, titleOverview: overview)
+                self?.delegate?.searchResultsViewControllerDidTapItem(viewModel)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
