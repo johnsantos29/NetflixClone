@@ -71,6 +71,15 @@ extension CollectionViewTableViewCell {
         let titleName = title.original_name ?? title.original_title ?? "Unknown"
         
         print("Downloading \(titleName)")
+        
+        DataPersistenceManager.shared.downloadItem(with: title) { result in
+            switch result {
+            case .success(let success):
+                <#code#>
+            case .failure(let failure):
+                <#code#>
+            }
+        }
     }
 }
 
