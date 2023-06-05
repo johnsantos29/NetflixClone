@@ -10,6 +10,7 @@ import UIKit
 
 enum DBError: Error {
     case failedToSaveTMDBData
+    case failedToFetchTMDBData
 }
 
 final class DataPersistenceManager {
@@ -41,6 +42,25 @@ final class DataPersistenceManager {
             completion(.success(()))
         } catch {
             completion(.failure(DBError.failedToSaveTMDBData))
+        }
+    }
+    
+    func fetchTMDBDataFromDB(completion: @escaping (Result<[TitleItem], Error>) -> Void) {
+        // reference to the app delegate instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+
+        // core data context
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let request: NSFetchRequest<TitleItem> = TitleItem.fetchRequest()
+        
+        do {
+            let titles = try context.fetch(request)
+            completion(.success(titles))
+        } catch {
+            completion(.failure(DBError.failedToFetchTMDBData))
         }
     }
 }
