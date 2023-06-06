@@ -29,6 +29,10 @@ class DownloadsViewController: UIViewController {
         downloadedTable.dataSource = self
         
         fetchTMDBFromDB()
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("downloaded"), object: nil, queue: nil) { _ in
+            self.fetchTMDBFromDB()
+        }
     }
     
     override func viewDidLayoutSubviews() {

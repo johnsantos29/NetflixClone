@@ -73,7 +73,7 @@ extension CollectionViewTableViewCell {
         DataPersistenceManager.shared.downloadItem(with: title) { result in
             switch result {
             case .success():
-                print("Downloading \(titleName)")
+                NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
             case .failure(let failure):
                 print(failure.localizedDescription)
             }
